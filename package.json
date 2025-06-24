@@ -1,0 +1,61 @@
+{
+  "name": "test",
+  "version": "5.0.1",
+  "private": true,
+  "home": "home",
+  "dependencies": {
+    "@apollo/client": "^3.7.17",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fullstory/browser": "^1.7.1",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/material": "^5.14.2",
+    "@mui/x-date-pickers": "^6.11.1",
+    "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
+    "dotenv": "^16.3.1",
+    "env-cmd": "^10.1.0",
+    "localforage": "^1.10.0",
+    "lodash": "^4.17.21",
+    "numeral": "^2.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.14.2",
+    "react-scripts": "^5.0.1",
+    "uuid": "^9.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "buildAssist": "env-cmd -f .env.local node utils/buildAssist.js",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "start:production": "env-cmd -f .env.production.local npm start",
+    "serve": "serve -s build -l 3000",
+    "lint": "eslint"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ],
+    "rules": {
+      "react-hooks/exhaustive-deps": "off"
+    }
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+  }
+}
