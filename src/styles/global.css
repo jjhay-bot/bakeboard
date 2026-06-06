@@ -1,0 +1,143 @@
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Baloo+2:wght@400..800&display=swap");
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+/* IMPORTANT */
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  overflow: auto;
+}
+
+.layout {
+  display: flex;
+  min-width: 100vw;
+  min-height: 100dvh;
+  min-height: 100vh;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background: #ffffff;
+  font-family: "Baloo 2", sans-serif;
+}
+
+.app {
+  min-height: 10dvh;
+  height: 100vh;
+}
+
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+  scrollbar-width: auto;
+  font-family: "Baloo 2", sans-serif;
+  /* scrollbar-color: #b2b2b2 #ffffff; */
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  /* width: 7px;
+  height: 7px; */
+  width: 0px;
+  height: 0px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #ffffff;
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: silver;
+  border-radius: 4px;
+  border: 1px none #ffffff;
+}
+
+.noscrollbar::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  overflow-y: hidden !important;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield; /* Firefox */
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.pointer {
+  text-decoration: none;
+}
+
+.pointer:hover {
+  cursor: pointer;
+  filter: brightness(1.05);
+}
+
+.capitalize {
+  text-transform: capitalize !important;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.placeholder {
+  color: #b9b9b9 !important;
+}
+
+/* HELPER */
+.red,
+.blue,
+.green,
+.silver {
+  border: 1px solid red;
+  box-sizing: border-box;
+}
+
+.blue {
+  border: 1px solid blue;
+}
+
+.green {
+  border: 1px solid green;
+}
+
+.silver {
+  border: 1px solid silver;
+}
+
+iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.disabled {
+  background-color: #e2e3ed !important;
+  color: #4e4b66 !important;
+}
+
+.alex_brush {
+  font-family: "Alex Brush", cursive !important;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.baloo {
+  font-family: "Baloo 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
