@@ -1,5 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
-/* @import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&display=swap"); */
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alex+Brush&family=Baloo+2:wght@400..800&display=swap");
 
 html {
   scroll-behavior: smooth;
@@ -23,7 +23,7 @@ body {
   padding: 0;
   margin: 0;
   background: #ffffff;
-  font-family: "Poppins", sans-serif;
+  font-family: "Baloo 2", sans-serif;
 }
 
 .app {
@@ -35,7 +35,7 @@ body {
 /* Firefox */
 * {
   scrollbar-width: auto;
-  font-family: "Poppins", sans-serif;
+  font-family: "Baloo 2", sans-serif;
   /* scrollbar-color: #b2b2b2 #ffffff; */
 }
 
@@ -127,4 +127,17 @@ iframe {
 .disabled {
   background-color: #e2e3ed !important;
   color: #4e4b66 !important;
+}
+
+.alex_brush {
+  font-family: "Alex Brush", cursive !important;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.baloo {
+  font-family: "Baloo 2", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }

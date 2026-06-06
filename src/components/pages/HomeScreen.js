@@ -1,20 +1,33 @@
-// import React from "react";
-import { ScreenContainer } from "../../App";
 import { Stack } from "@mui/material";
+import { useState } from "react";
+import ScreenContainer from "../layout/ScreenContainer";
+import MuiSelect from "../atoms/MuiSelect";
+
+const studentOptions = [
+  { id: 1, label: "Test" },
+  { id: 2, label: "Test 2" },
+  { id: 3, label: "Skills" },
+];
 
 const HomeScreen = () => {
+  const [selectedStudent, setSelectedStudent] = useState(studentOptions[1]);
+
   return (
     <ScreenContainer sx={{ bgcolor: "#f0f0" }} className="red" vh="100dvh">
-      <Stack sx={{ minHeight: "1000px" }} px={2}>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officia
-        temporibus voluptatibus illo accusantium ea ad iste! Dolorum asperiores
-        odit eius, illo sequi culpa, perferendis omnis, voluptate fugiat
-        sapiente totam quos.
-        <Stack pt={8} sx={{ color: "#666" }}>
-          {window?.navigator?.userAgent}
-        </Stack>
+      <Stack px={2} py={2}>
+        <MuiSelect
+          name="student"
+          options={studentOptions}
+          value={selectedStudent}
+          onChange={(_, value) => {
+            if (Array.isArray(value)) {
+              return;
+            }
+
+            setSelectedStudent(value);
+          }}
+        />
       </Stack>
-      <Stack sx={{ bgcolor: "yellow" }}>end</Stack>
     </ScreenContainer>
   );
 };

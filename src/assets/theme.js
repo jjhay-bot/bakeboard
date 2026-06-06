@@ -1,32 +1,34 @@
 import { createTheme } from "@mui/material/styles";
 
+const appFontFamily = `"Baloo 2", sans-serif`;
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#ed5a29",
+      main: "#ff7f8f",
     },
     secondary: {
-      main: "#07a69c",
+      main: "#6e3f2f",
     },
   },
   typography: {
-    fontFamily: "Poppins",
+    fontFamily: appFontFamily,
     title: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "24px",
       fontWeight: 700,
       letterSpacing: "1px",
       color: "#000",
     },
     label: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "13px",
       fontWeight: 600,
       color: "#4E4B66",
       letterSpacing: "0.25px",
     },
     description: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "13px",
       fontWeight: 400,
       color: "#4E4B66",
@@ -47,28 +49,28 @@ const theme = createTheme({
       color: "#4E4B66",
     },
     name: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "15px",
       fontWeight: 700,
       letterSpacing: "0.75px",
       color: "#000",
     },
     amount: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "20px",
       fontWeight: 400,
       letterSpacing: "0.75px",
       color: "#262338",
     },
     subtitle2: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "13px",
       fontWeight: 400,
       letterSpacing: "0.75px",
       color: "#4E4B66",
     },
     subtitle1: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "13px",
       fontWeight: 600,
       letterSpacing: "0.25px",
@@ -94,7 +96,7 @@ const theme = createTheme({
       letterSpacing: "0.25px",
     },
     body4: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "13px",
       fontWeight: 600,
       color: "#262338",
@@ -164,9 +166,9 @@ const theme = createTheme({
 
 export const themeInput = createTheme({
   typography: {
-    fontFamily: "Poppins",
+    fontFamily: appFontFamily,
     label: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
       fontSize: "13px",
       fontWeight: 600,
       color: "#4E4B66",
@@ -183,7 +185,7 @@ export const themeInput = createTheme({
   },
   components: {
     typography: {
-      fontFamily: "Poppins",
+      fontFamily: appFontFamily,
     },
     MuiInputLabel: {
       styleOverrides: {
@@ -222,7 +224,7 @@ export const themeInput = createTheme({
             "& .MuiOutlinedInput-input": {
               // fontSize: "0.95rem", // Adjust the font size as needed
               fontSize: "15px",
-              fontFamily: "Poppins",
+              fontFamily: appFontFamily,
               color: "#262338",
               letterSpacing: "0.75px",
             },
@@ -243,7 +245,7 @@ export const themeNudge = createTheme({
           color: "#fff",
           backgroundColor: "#07a69c",
           maxWidth: 180,
-          fontFamily: "Poppins",
+          fontFamily: appFontFamily,
           borderRadius: "12px",
           padding: "12px 16px",
           left: "10px",
