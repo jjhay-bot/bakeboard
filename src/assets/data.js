@@ -76,24 +76,28 @@ export const defaultDashboardSummary = [
     id: "total",
     label: "Total",
     value: 15,
+    filterValue: "all",
     tone: dashboardSummaryTones.total,
   },
   {
     id: "paid",
     label: "Paid",
     value: 8,
+    filterValue: "Paid",
     tone: dashboardSummaryTones.paid,
   },
   {
     id: "downpayment",
     label: "Downpayment",
     value: 4,
+    filterValue: "Downpayment",
     tone: dashboardSummaryTones.downpayment,
   },
   {
     id: "unpaid",
     label: "Unpaid",
     value: 3,
+    filterValue: "Unpaid",
     tone: dashboardSummaryTones.unpaid,
   },
 ];
@@ -112,8 +116,9 @@ export const defaultDashboardProgress = {
   id: "todays-progress",
   title: "Today's Progress",
   totalOrders: 15,
-  completedOrders: 8,
-  helperText: "8 baked or finished today, 7 remaining.",
+  completedOrders: 9,
+  progressLabel: "Baking...",
+  helperText: "9 baked or finished today, 6 remaining.",
   tone: dashboardProgressTone,
 };
 

@@ -38,11 +38,7 @@ const DashboardOrderCard = ({ order, tone }) => {
           />
         ) : null}
 
-        <Stack
-          spacing={0.25}
-          width="100%"
-          minWidth={0}
-        >
+        <Stack spacing={0.25} width="100%" minWidth={0}>
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -50,7 +46,12 @@ const DashboardOrderCard = ({ order, tone }) => {
             spacing={1}
           >
             <Stack spacing={0.25} minWidth={0}>
-              <Typography color={nameColor} fontSize={18} fontWeight={700}>
+              <Typography
+                color={nameColor}
+                fontSize={18}
+                fontWeight={700}
+                sx={{ letterSpacing: 0 }}
+              >
                 {order.customerName}
               </Typography>
               <Typography color={detailColor} fontSize={14} fontWeight={600}>
@@ -69,6 +70,10 @@ const DashboardOrderCard = ({ order, tone }) => {
                 borderRadius: "999px",
                 "& .MuiChip-label": {
                   px: 1.25,
+                  fontSize:
+                    order?.paymentStatus?.length > 10 ? "0.72rem" : "0.8rem",
+                  letterSpacing:
+                    order?.paymentStatus?.length > 10 ? "-0.75px" : "normal",
                 },
               }}
             />

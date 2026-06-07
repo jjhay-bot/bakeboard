@@ -15,7 +15,10 @@ const ScreenContainer = ({
 
   return (
     <Stack className="layout" height={maxHeightUnit} {...props}>
-      <Stack className="silver" flex={0}>
+      <Stack
+        flex={0}
+        //  className="silver"
+      >
         {header ?? <Header />}
       </Stack>
 

@@ -13,11 +13,11 @@ const Header = () => {
       alignItems="center"
       justifyContent="space-between"
       px={2}
-      py={1.5}
+      py={1}
       sx={{
         bgcolor: "#fffaf6",
         borderBottom: "2px solid #f4e3d7",
-        boxShadow: "0 4px 12px rgba(237, 122, 72, 0.18)",
+        boxShadow: "0 1px 4px rgba(237, 122, 72, 0.18)",
       }}
     >
       <Stack
@@ -56,7 +56,8 @@ const Header = () => {
             lineHeight: 1,
             letterSpacing: 2,
             fontWeight: 600,
-            pt: 0.75,
+            // pt: 0.75,
+            transform: "translateY(0.35rem)",
           }}
           className="alex_brush"
         >

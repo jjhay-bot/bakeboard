@@ -1,16 +1,21 @@
 import { Paper, Stack, Typography } from "@mui/material";
 
-const DashboardSummaryCard = ({ value, label, tone }) => {
+const DashboardSummaryCard = ({ value, label, tone, active = false, onClick }) => {
   const { background, border, valueColor, labelColor } = tone;
 
   return (
     <Paper
       elevation={0}
+      onClick={onClick}
       sx={{
         p: 1.25,
         borderRadius: "18px",
         bgcolor: background,
         border: `1px solid ${border}`,
+        cursor: onClick ? "pointer" : "default",
+        boxShadow: active ? `0 0 0 2px ${border}` : "none",
+        transform: active ? "translateY(-1px)" : "none",
+        transition: "transform 120ms ease, box-shadow 120ms ease",
       }}
     >
       <Stack justifyContent="space-between" height="100%" spacing={0.5}>
