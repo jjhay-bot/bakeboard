@@ -1,4 +1,4 @@
-import AddOrderScreen from "./AddOrderScreen";
+import AddOrderScreen from "./AddOrder";
 import CalendarScreen from "./CalendarScreen";
 import DashboardScreen from "./DashboardScreen";
 import HomeScreen from "./HomeScreen";

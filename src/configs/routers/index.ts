@@ -23,7 +23,7 @@ export const appRoutes = [
   },
   {
     path: "orders",
-    element: OrdersScreen,
+    element: DashboardScreen,
   },
   {
     path: "orders/new",

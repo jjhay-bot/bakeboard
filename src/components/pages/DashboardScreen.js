@@ -1,12 +1,12 @@
-import { Button, Grid2, Paper, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Button, Grid2, Paper, Stack, Typography } from "@mui/material";
 import {
   defaultDashboardCampaign,
   defaultDashboardOrdersToday,
   defaultDashboardProgress,
   defaultDashboardSummary,
 } from "../../assets/data";
+import AddOrderDialog from "./AddOrder/AddOrderDialog";
 import {
   DashboardOrderCard,
   DashboardProgressCard,
@@ -20,7 +20,7 @@ const DashboardScreen = () => {
   const [dailyProgress] = useState(defaultDashboardProgress);
   const [summaryCards] = useState(defaultDashboardSummary);
   const [selectedFilter, setSelectedFilter] = useState("all");
-  const navigate = useNavigate();
+  const [isAddOrderOpen, setIsAddOrderOpen] = useState(false);
   const progressValue =
     dailyProgress.totalOrders > 0
       ? (dailyProgress.completedOrders / dailyProgress.totalOrders) * 100
@@ -142,7 +142,7 @@ const DashboardScreen = () => {
             </Typography>
 
             <Button
-              onClick={() => navigate("/orders/new")}
+              onClick={() => setIsAddOrderOpen(true)}
               size="small"
               sx={{
                 borderRadius: "14px",
@@ -169,6 +169,11 @@ const DashboardScreen = () => {
           ))}
         </Stack>
       </Stack>
+
+      <AddOrderDialog
+        open={isAddOrderOpen}
+        onClose={() => setIsAddOrderOpen(false)}
+      />
     </ScreenContainer>
   );
 };

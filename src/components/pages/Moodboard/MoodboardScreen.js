@@ -1,122 +1,53 @@
-import { useState } from "react";
+import { useRef } from "react";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import FileUploadRoundedIcon from "@mui/icons-material/FileUploadRounded";
+import FileDownloadRoundedIcon from "@mui/icons-material/FileDownloadRounded";
+import RestartAltRoundedIcon from "@mui/icons-material/RestartAltRounded";
 import { Grid2, IconButton, Paper, Stack, Typography } from "@mui/material";
 import ScreenContainer from "../../layout/ScreenContainer";
 import MoodboardIdeaDialog from "./MoodboardIdeaDialog";
+import MoodboardImportDialog from "./MoodboardImportDialog";
 import MoodboardNoteCard from "./MoodboardNoteCard";
 import {
-  applyMoodboardLayout,
-  buildMoodboardFormValues,
-  buildMoodboardImage,
-  emptyMoodboardForm,
-  initialMoodboardNotes,
   moodboardStatusOptions,
   moodboardTagOptions,
 } from "./moodboardData";
+import useMoodboardNotes from "./useMoodboardNotes";
 
 const MoodboardScreen = () => {
-  const [notes, setNotes] = useState(initialMoodboardNotes);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [formValues, setFormValues] = useState(emptyMoodboardForm);
-  const [editingNoteId, setEditingNoteId] = useState(null);
+  const importInputRef = useRef(null);
+  const {
+    notes,
+    isDialogOpen,
+    isImportDialogOpen,
+    formValues,
+    editingNoteId,
+    importText,
+    handleDownloadNotes,
+    handleOpenDialog,
+    handleEditNote,
+    handleOpenImportDialog,
+    handleCloseImportDialog,
+    handleImportFile,
+    handleImportTextChange,
+    handleImportTextSubmit,
+    handleResetNotes,
+    handleToggleNoteStatus,
+    handleCloseDialog,
+    handleChange,
+    handleSelectField,
+    handleSubmit,
+  } = useMoodboardNotes();
 
-  const handleOpenDialog = () => {
-    setEditingNoteId(null);
-    setFormValues(emptyMoodboardForm);
-    setIsDialogOpen(true);
+  const handleOpenImportFilePicker = () => {
+    importInputRef.current?.click();
   };
 
-  const handleEditNote = (note) => {
-    setEditingNoteId(note.id);
-    setFormValues(buildMoodboardFormValues(note));
-    setIsDialogOpen(true);
-  };
+  const handleImportInputChange = async (event) => {
+    const [file] = event.target.files || [];
 
-  const handleToggleNoteStatus = (targetNote) => {
-    setNotes((current) =>
-      current.map((note, index) =>
-        note.id === targetNote.id
-          ? applyMoodboardLayout(
-              {
-                ...note,
-                status: note.status === "done" ? "active" : "done",
-              },
-              index,
-            )
-          : note,
-      ),
-    );
-  };
-
-  const handleCloseDialog = () => {
-    setIsDialogOpen(false);
-    setEditingNoteId(null);
-    setFormValues(emptyMoodboardForm);
-  };
-
-  const handleChange = (field) => (event) => {
-    setFormValues((current) => ({
-      ...current,
-      [field]: event.target.value,
-    }));
-  };
-
-  const handleSelectField = (field, value) => {
-    setFormValues((current) => ({
-      ...current,
-      [field]: value,
-    }));
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const trimmedTitle = formValues.title.trim();
-    const trimmedBody = formValues.body.trim();
-    const trimmedTag = formValues.tag.trim();
-    const trimmedImageUrl = formValues.imageUrl.trim();
-    const nextStatus = formValues.status || "active";
-
-    if (!trimmedTitle || !trimmedBody) {
-      return;
-    }
-
-    if (editingNoteId) {
-      setNotes((current) =>
-        current.map((note, index) =>
-          note.id === editingNoteId
-            ? applyMoodboardLayout(
-                {
-                  ...note,
-                  title: trimmedTitle,
-                  body: trimmedBody,
-                  tag: trimmedTag || "idea",
-                  status: nextStatus,
-                  image: buildMoodboardImage(trimmedImageUrl),
-                },
-                index,
-              )
-            : note,
-        ),
-      );
-      handleCloseDialog();
-      return;
-    }
-
-    const createdNote = applyMoodboardLayout(
-      {
-        id: `idea-${Date.now()}`,
-        title: trimmedTitle,
-        body: trimmedBody,
-        tag: trimmedTag || "idea",
-        status: nextStatus,
-        image: buildMoodboardImage(trimmedImageUrl),
-      },
-      notes.length,
-    );
-
-    setNotes((current) => [createdNote, ...current]);
-    handleCloseDialog();
+    await handleImportFile(file);
+    event.target.value = "";
   };
 
   return (
@@ -162,17 +93,93 @@ const MoodboardScreen = () => {
           </Stack>
         </Paper>
 
-        <Grid2 container spacing={1.5}>
-          {notes.map((note) => (
-            <Grid2 key={note.id} size={note.size}>
-              <MoodboardNoteCard
-                note={note}
-                onEdit={handleEditNote}
-                onToggleStatus={handleToggleNoteStatus}
+        {notes.length > 0 ? (
+          <Grid2 container spacing={1.5}>
+            {notes.map((note) => (
+              <Grid2 key={note.id} size={note.size}>
+                <MoodboardNoteCard
+                  note={note}
+                  onEdit={handleEditNote}
+                  onToggleStatus={handleToggleNoteStatus}
+                />
+              </Grid2>
+            ))}
+          </Grid2>
+        ) : (
+          <Paper variant="boardPanel" elevation={0} sx={{ p: 2 }}>
+            <Stack spacing={0.5}>
+              <Typography color="secondary.main" fontSize={16} fontWeight={700}>
+                No ideas yet
+              </Typography>
+              <Typography color="#9a7a6a" fontSize={14}>
+                Add a new idea to start building your moodboard again.
+              </Typography>
+            </Stack>
+          </Paper>
+        )}
+
+        <Paper variant="boardPanel" elevation={0} sx={{ p: 2 }}>
+          <Stack direction="row" alignItems="center" justifyContent="space-between">
+            <Typography color="secondary.main" fontSize={16} fontWeight={700}>
+              Board actions
+            </Typography>
+
+            <Stack direction="row" spacing={1}>
+              <input
+                ref={importInputRef}
+                type="file"
+                accept="application/json,.json"
+                onChange={handleImportInputChange}
+                hidden
               />
-            </Grid2>
-          ))}
-        </Grid2>
+              <IconButton
+                aria-label="Import ideas"
+                onClick={handleOpenImportDialog}
+                sx={{
+                  borderRadius: "14px",
+                  bgcolor: "#fff6f0",
+                  color: "secondary.main",
+                  border: "1px solid #f2d7ca",
+                  "&:hover": {
+                    bgcolor: "#ffece3",
+                  },
+                }}
+              >
+                <FileUploadRoundedIcon sx={{ fontSize: 20 }} />
+              </IconButton>
+              <IconButton
+                aria-label="Download ideas as JSON"
+                onClick={handleDownloadNotes}
+                sx={{
+                  borderRadius: "14px",
+                  bgcolor: "#fff6f0",
+                  color: "secondary.main",
+                  border: "1px solid #f2d7ca",
+                  "&:hover": {
+                    bgcolor: "#ffece3",
+                  },
+                }}
+              >
+                <FileDownloadRoundedIcon sx={{ fontSize: 20 }} />
+              </IconButton>
+              <IconButton
+                aria-label="Delete all ideas"
+                onClick={handleResetNotes}
+                sx={{
+                  borderRadius: "14px",
+                  bgcolor: "#fff6f0",
+                  color: "#c85027",
+                  border: "1px solid #f2d7ca",
+                  "&:hover": {
+                    bgcolor: "#ffece3",
+                  },
+                }}
+              >
+                <RestartAltRoundedIcon sx={{ fontSize: 20 }} />
+              </IconButton>
+            </Stack>
+          </Stack>
+        </Paper>
       </Stack>
 
       <MoodboardIdeaDialog
@@ -185,6 +192,14 @@ const MoodboardScreen = () => {
         onSubmit={handleSubmit}
         statusOptions={moodboardStatusOptions}
         tagOptions={moodboardTagOptions}
+      />
+      <MoodboardImportDialog
+        open={isImportDialogOpen}
+        importText={importText}
+        onChange={handleImportTextChange}
+        onClose={handleCloseImportDialog}
+        onChooseFile={handleOpenImportFilePicker}
+        onSubmit={handleImportTextSubmit}
       />
     </ScreenContainer>
   );

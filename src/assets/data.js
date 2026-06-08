@@ -75,14 +75,14 @@ export const defaultDashboardSummary = [
   {
     id: "total",
     label: "Total",
-    value: 15,
+    value: 12,
     filterValue: "all",
     tone: dashboardSummaryTones.total,
   },
   {
     id: "paid",
     label: "Paid",
-    value: 8,
+    value: 5,
     filterValue: "Paid",
     tone: dashboardSummaryTones.paid,
   },
@@ -115,10 +115,10 @@ export const dashboardProgressTone = {
 export const defaultDashboardProgress = {
   id: "todays-progress",
   title: "Today's Progress",
-  totalOrders: 15,
-  completedOrders: 9,
+  totalOrders: 12,
+  completedOrders: 7,
   progressLabel: "Baking...",
-  helperText: "9 baked or finished today, 6 remaining.",
+  helperText: "7 baked or finished today, 5 remaining.",
   tone: dashboardProgressTone,
 };
 
@@ -214,6 +214,90 @@ export const defaultDashboardOrdersToday = {
       imageUrl:
         "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       tone: dashboardOrderTones.unpaid,
+    },
+    {
+      id: "mia-navarro",
+      customerName: "Mia Navarro",
+      product: "Number Cake",
+      flavor: "Ube",
+      theme: "Pastel Lilac",
+      pickupText: "May 10, 8:00 AM",
+      paymentStatus: "Paid",
+      imageUrl:
+        "https://images.unsplash.com/photo-1621303837174-89787a7d4729?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tone: dashboardOrderTones.paid,
+    },
+    {
+      id: "niko-fernandez",
+      customerName: "Niko Fernandez",
+      product: "Bento Set",
+      flavor: "Red Velvet",
+      theme: "Blue Clouds",
+      pickupText: "May 10, 10:30 AM",
+      paymentStatus: "Downpayment",
+      imageUrl:
+        "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tone: dashboardOrderTones.downpayment,
+    },
+    {
+      id: "bianca-tan",
+      customerName: "Bianca Tan",
+      product: "Dedication Cake",
+      flavor: "Mocha",
+      theme: "Vintage Heart",
+      pickupText: "May 10, 11:45 AM",
+      paymentStatus: "Paid",
+      imageUrl:
+        "https://images.unsplash.com/photo-1535254973040-607b474cb50d?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tone: dashboardOrderTones.paid,
+    },
+    {
+      id: "enzo-morales",
+      customerName: "Enzo Morales",
+      product: "Cupcake Tower",
+      flavor: "Cookies & Cream",
+      theme: "Sage Green",
+      pickupText: "May 10, 1:15 PM",
+      paymentStatus: "Unpaid",
+      imageUrl:
+        "https://images.unsplash.com/photo-1519869325930-281384150729?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tone: dashboardOrderTones.unpaid,
+    },
+    {
+      id: "trisha-ramos",
+      customerName: "Trisha Ramos",
+      product: "Mini Donut Box",
+      flavor: "Strawberry Milk",
+      theme: "Peach Bows",
+      pickupText: "May 10, 3:00 PM",
+      paymentStatus: "Downpayment",
+      imageUrl:
+        "https://images.unsplash.com/photo-1525648199074-cee30ba79a4a?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tone: dashboardOrderTones.downpayment,
+    },
+    {
+      id: "carlo-bautista",
+      customerName: "Carlo Bautista",
+      product: "Photo Cake",
+      flavor: "Vanilla Bean",
+      theme: "Black & White",
+      pickupText: "May 10, 5:15 PM",
+      paymentStatus: "Downpayment",
+      imageUrl:
+        "https://images.unsplash.com/photo-1571115177098-24ec42ed204d?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tone: dashboardOrderTones.downpayment,
+    },
+    {
+      id: "ella-velasco",
+      customerName: "Ella Velasco",
+      product: "Brownie Slab",
+      flavor: "Triple Chocolate",
+      theme: "Minimal Beige",
+      pickupText: "May 10, 8:30 PM",
+      paymentStatus: "Paid",
+      imageUrl:
+        "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+      tone: dashboardOrderTones.paid,
     },
   ],
 };

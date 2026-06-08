@@ -59,6 +59,8 @@ export const emptyMoodboardForm = {
   status: "active",
 };
 
+export const moodboardStorageKey = "moodboard-notes";
+
 export const moodboardStatusOptions = [
   { value: "active", label: "Active" },
   { value: "done", label: "Done" },
@@ -104,6 +106,45 @@ export const buildMoodboardImage = (imageUrl) => {
     label: "Attached image",
     src: imageUrl,
   };
+};
+
+export const normalizeMoodboardNotes = (notes) => {
+  if (!Array.isArray(notes)) {
+    return initialMoodboardNotes;
+  }
+
+  return notes
+    .filter(
+      (note) =>
+        note &&
+        typeof note === "object" &&
+        typeof note.id === "string" &&
+        typeof note.title === "string" &&
+        typeof note.body === "string",
+    )
+    .map((note, index) =>
+      applyMoodboardLayout(
+        {
+          ...note,
+          tag: note.tag || "idea",
+          status: note.status || "active",
+          image: note.image?.src ? buildMoodboardImage(note.image.src) : null,
+        },
+        index,
+      ),
+    );
+};
+
+export const extractMoodboardImportNotes = (payload) => {
+  if (Array.isArray(payload)) {
+    return payload;
+  }
+
+  if (payload && typeof payload === "object" && Array.isArray(payload.notes)) {
+    return payload.notes;
+  }
+
+  return null;
 };
 
 export const initialMoodboardNotes = [

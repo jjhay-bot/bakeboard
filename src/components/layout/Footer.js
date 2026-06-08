@@ -17,7 +17,8 @@ const navItems = [
   {
     label: "Orders",
     value: "/orders",
-    matchPaths: ["/orders", "/orders/new"],
+    // matchPaths: ["/orders", "/orders/new"],
+    matchPaths: ["/orders", "/orders/new", "/", "/home", "/dashboard"],
     icon: <ReceiptLongRoundedIcon />,
   },
   {
@@ -47,7 +48,9 @@ const Footer = () => {
   const activeValue = useMemo(() => {
     const pathname = location.pathname;
     const matchedItem = navItems.find((item) =>
-      item.matchPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`))
+      item.matchPaths.some(
+        (path) => pathname === path || pathname.startsWith(`${path}/`),
+      ),
     );
 
     if (matchedItem) {

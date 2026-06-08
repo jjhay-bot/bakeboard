@@ -52,6 +52,7 @@ const MoodboardNoteCard = ({ note, onEdit, onToggleStatus }) => {
         p: 2,
         bgcolor: note.tone,
         transform: `rotate(${note.rotation})`,
+        // maxWidth: "50vw"
       }}
     >
       <Box
