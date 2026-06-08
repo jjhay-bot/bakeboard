@@ -1,14 +1,48 @@
-import { createTheme } from "@mui/material/styles";
+import { alpha, createTheme } from "@mui/material/styles";
 
 const appFontFamily = `"Baloo 2", sans-serif`;
+const boardBorder = "#f1ddd2";
+const boardCanvas = "#fffaf6";
+const boardPaper = "#fffdf8";
+const boardTextPrimary = "#6e3f2f";
+const boardTextSecondary = "#8a6a5c";
+const boardAction = "#ed5a29";
+
+const boardPanelStyles = {
+  borderRadius: "18px",
+  backgroundColor: boardPaper,
+  border: `1px dashed ${"#e5c9b9"}`,
+};
+
+const primaryColor = "#ff7f8f";
+const secondaryColor = "#6e3f2f";
+
+const boardNoteStyles = {
+  padding: "16px",
+  borderRadius: "9px",
+  border: `1px solid ${alpha(boardTextPrimary, 0.08)}`,
+  boxShadow: `0 10px 20px ${alpha(boardTextPrimary, 0.08)}`,
+  position: "relative",
+};
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#ff7f8f",
+      main: primaryColor,
+      light: "#ff8d63",
+      dark: "#d84d1f",
+      contrastText: "#fffaf6",
     },
     secondary: {
-      main: "#6e3f2f",
+      main: secondaryColor,
+    },
+    background: {
+      default: boardCanvas,
+      paper: boardPaper,
+    },
+    text: {
+      primary: boardTextPrimary,
+      secondary: boardTextSecondary,
     },
   },
   typography: {
@@ -103,6 +137,9 @@ const theme = createTheme({
       letterSpacing: "0.25px",
     },
   },
+  shape: {
+    borderRadius: 16,
+  },
   breakpoints: {
     values: {
       xs: 0,
@@ -122,16 +159,71 @@ const theme = createTheme({
       },
     },
     MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
       styleOverrides: {
         root: {
           borderRadius: "16px",
           textTransform: "none",
+          fontWeight: 700,
         },
         "&.Mui-disabled": {
           backgroundColor: "#F7F7FC",
           color: "#F7F7FC",
         },
       },
+      variants: [
+        {
+          props: { variant: "boardPrimary" },
+          style: {
+            backgroundColor: boardAction,
+            color: "#fffaf6",
+            boxShadow: `0 10px 20px ${alpha(boardAction, 0.18)}`,
+            "&:hover": {
+              backgroundColor: "#d84d1f",
+            },
+          },
+        },
+        {
+          props: { variant: "boardSecondary" },
+          style: {
+            color: boardTextSecondary,
+            backgroundColor: "#f8eee7",
+            "&:hover": {
+              backgroundColor: "#f1e3d9",
+            },
+          },
+        },
+      ],
+    },
+    MuiIconButton: {
+      variants: [
+        {
+          props: { variant: "boardAction" },
+          style: {
+            backgroundColor: primaryColor,
+            color: "#fffaf6",
+            boxShadow: `0 10px 20px ${alpha(boardAction, 0.22)}`,
+            "&:hover": {
+              backgroundColor: primaryColor,
+              filter: "brightness(1.1)",
+            },
+          },
+        },
+      ],
+    },
+    MuiPaper: {
+      variants: [
+        {
+          props: { variant: "boardPanel" },
+          style: boardPanelStyles,
+        },
+        {
+          props: { variant: "boardNote" },
+          style: boardNoteStyles,
+        },
+      ],
     },
 
     MuiBackdrop: {
@@ -141,26 +233,75 @@ const theme = createTheme({
         },
       },
     },
-    // MuiOutlinedInput: {
-    //   styleOverrides: {
-    //     root: {
-    //       borderRadius: `8px`,
-    //       border: "white 1px solid",
-    //       "& input::-webkit-outer-spin-button, & input::-webkit-inner-spin-button": {
-    //         display: "none",
-    //       },
-    //       "& input[type=number]": {
-    //         MozAppearance: "textfield",
-    //       },
-    //       "& input:-internal-autofill-selected": {
-    //         background: "none",
-    //       },
-    //       "&.Mui-focused fieldset": {
-    //         border: "1px #fff !important",
-    //       },
-    //     },
-    //   },
-    // },
+    MuiDialog: {
+      styleOverrides: {
+        paper: {
+          borderRadius: "24px",
+          backgroundColor: boardCanvas,
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        root: {
+          "&.MuiInputLabel-sizeSmall": {
+            transform: "translate(14px, 10px) scale(1)",
+          },
+          "&.MuiInputLabel-sizeSmall.MuiInputLabel-shrink": {
+            transform: "translate(14px, -9px) scale(0.75)",
+          },
+        },
+      },
+    },
+    MuiTextField: {
+      defaultProps: {
+        size: "small",
+      },
+      styleOverrides: {
+        root: {
+          "& .MuiOutlinedInput-root": {
+            "& fieldset": {
+              borderColor: "#D9DBE9",
+              borderRadius: "16px",
+            },
+            "&:hover fieldset": {
+              borderColor: "#D9DBE9",
+            },
+            "&.Mui-focused fieldset": {
+              borderColor: "#D9DBE9",
+            },
+            "&.MuiInputBase-sizeSmall": {
+              alignItems: "center",
+              "& fieldset": {
+                borderRadius: "16px",
+                borderColor: alpha("#D9DBE9", 0.72),
+                borderWidth: "1px",
+              },
+              "&:hover fieldset": {
+                borderColor: alpha("#D9DBE9", 0.88),
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: alpha("#D9DBE9", 0.92),
+              },
+              "& input.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall": {
+                // padding: "12px 14px",
+                transform: "translateY(1px)",
+              },
+              "& textarea.MuiOutlinedInput-input.MuiInputBase-inputSizeSmall": {
+                paddingTop: 0,
+                paddingBottom: 0,
+              },
+            },
+          },
+          "& .MuiOutlinedInput-input": {
+            fontSize: "15px",
+            fontFamily: appFontFamily,
+            color: "#262338",
+            letterSpacing: "0.75px",
+          },
+        },
+      },
+    },
   },
 });
 

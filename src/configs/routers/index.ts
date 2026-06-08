@@ -2,6 +2,7 @@ import {
   AddOrderScreen,
   CalendarScreen,
   DashboardScreen,
+  MoodboardScreen,
   OrderDetailScreen,
   OrdersScreen,
   PaymentsScreen,
@@ -39,5 +40,9 @@ export const appRoutes = [
   {
     path: "payments",
     element: PaymentsScreen,
+  },
+  {
+    path: "moodboard",
+    element: MoodboardScreen,
   },
 ];

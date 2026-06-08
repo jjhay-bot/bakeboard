@@ -1,4 +1,5 @@
 import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 // import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import PaymentsRoundedIcon from "@mui/icons-material/PaymentsRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
@@ -30,6 +31,12 @@ const navItems = [
     value: "/payments",
     matchPaths: ["/payments"],
     icon: <PaymentsRoundedIcon />,
+  },
+  {
+    label: "Moodboard",
+    value: "/moodboard",
+    matchPaths: ["/moodboard"],
+    icon: <LightbulbRoundedIcon />,
   },
 ];
 
