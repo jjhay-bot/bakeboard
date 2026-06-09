@@ -46,11 +46,6 @@ const noteLayouts = [
   },
 ];
 
-const imageBackgrounds = [
-  "linear-gradient(135deg, rgba(255,255,255,0.55), rgba(255,255,255,0.1)), linear-gradient(120deg, #f7b6a6, #f5e2c8 55%, #d98d74)",
-  "linear-gradient(180deg, rgba(255,255,255,0.2), rgba(255,255,255,0)), radial-gradient(circle at top left, #fff1d6, transparent 35%), linear-gradient(135deg, #d88f52, #f3c899 58%, #fff2df)",
-];
-
 export const emptyMoodboardForm = {
   title: "",
   body: "",

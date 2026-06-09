@@ -4,7 +4,6 @@ import {
   DashboardScreen,
   MoodboardScreen,
   OrderDetailScreen,
-  OrdersScreen,
   PaymentsScreen,
 } from "../../components/pages";
 

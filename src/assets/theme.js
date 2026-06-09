@@ -1,7 +1,6 @@
 import { alpha, createTheme } from "@mui/material/styles";
 
 const appFontFamily = `"Baloo 2", sans-serif`;
-const boardBorder = "#f1ddd2";
 const boardCanvas = "#fffaf6";
 const boardPaper = "#fffdf8";
 const boardTextPrimary = "#6e3f2f";

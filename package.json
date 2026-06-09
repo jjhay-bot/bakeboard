@@ -27,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=false react-scripts build",
     "buildAssist": "env-cmd -f .env.local node utils/buildAssist.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

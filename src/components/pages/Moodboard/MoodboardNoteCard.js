@@ -1,28 +1,7 @@
 import { useState } from "react";
-import {
-  Box,
-  Menu,
-  MenuItem,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
-
-const statusStyles = {
-  active: {
-    label: "Active",
-    color: "#8f4f39",
-    backgroundColor: "rgba(255,255,255,0.68)",
-  },
-  done: {
-    label: "Done",
-    color: "#4c7453",
-    backgroundColor: "rgba(239, 255, 241, 0.82)",
-  },
-};
+import { Box, Menu, MenuItem, Paper, Stack, Typography } from "@mui/material";
 
 const MoodboardNoteCard = ({ note, onEdit, onToggleStatus }) => {
-  const status = statusStyles[note.status] || statusStyles.active;
   const [menuAnchor, setMenuAnchor] = useState(null);
 
   const handleOpenMenu = (event) => {

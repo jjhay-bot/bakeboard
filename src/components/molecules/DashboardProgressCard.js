@@ -1,22 +1,12 @@
-import { Grid2, LinearProgress, Paper, Stack, Typography } from "@mui/material";
+import { Grid2, LinearProgress, Stack, Typography } from "@mui/material";
 
 const DashboardProgressCard = ({
   title,
   valueText,
   progress,
-  progressLabel,
-  helperText,
   tone,
 }) => {
-  const {
-    background,
-    border,
-    titleColor,
-    valueColor,
-    helperColor,
-    trackColor,
-    barColor,
-  } = tone;
+  const { trackColor, barColor } = tone;
 
   return (
     <Grid2 container spacing={2.5} px={2} alignItems="center">
