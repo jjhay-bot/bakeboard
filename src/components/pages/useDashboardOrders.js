@@ -2,6 +2,7 @@
 // reset board actions, so DashboardScreen stays a thin view. All persistence
 // goes through ordersService; user feedback goes through the snackbar.
 import { useCallback, useEffect, useState } from "react";
+import { delay } from "lodash";
 import {
   clearOrders,
   exportOrders,
@@ -10,9 +11,14 @@ import {
 } from "../../services/orders/ordersService";
 import { useSnackbar } from "../feedback/SnackbarProvider";
 
+// Placeholder latency until a real orders API exists — lets us exercise the
+// loading skeleton. Remove the sleep() call once listOrders() hits the network.
+const sleep = (ms) => new Promise((resolve) => delay(resolve, ms));
+
 const useDashboardOrders = () => {
   const { showSnackbar } = useSnackbar();
   const [orders, setOrders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isImportDialogOpen, setIsImportDialogOpen] = useState(false);
   const [importText, setImportText] = useState("");
 
@@ -26,6 +32,7 @@ const useDashboardOrders = () => {
 
     const load = async () => {
       try {
+        await sleep(300); // placeholder API latency — remove with sleep()
         const nextOrders = await listOrders();
         if (isMounted) {
           setOrders(nextOrders);
@@ -34,6 +41,10 @@ const useDashboardOrders = () => {
         console.error("Failed to load dashboard orders", error);
         if (isMounted) {
           showSnackbar({ type: "error", message: "Couldn't load today's orders." });
+        }
+      } finally {
+        if (isMounted) {
+          setIsLoading(false);
         }
       }
     };
@@ -142,6 +153,7 @@ const useDashboardOrders = () => {
 
   return {
     orders,
+    isLoading,
     isImportDialogOpen,
     importText,
     handleOrderSaved,

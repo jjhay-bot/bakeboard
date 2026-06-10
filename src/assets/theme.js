@@ -160,6 +160,15 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiSkeleton: {
+      styleOverrides: {
+        // Light-brown skeleton tone, derived from the board brown so the
+        // loading state stays on-palette across the app.
+        root: {
+          backgroundColor: alpha(boardTextPrimary, 0.075),
+        },
+      },
+    },
     MuiTooltip: {
       styleOverrides: {
         tooltip: {

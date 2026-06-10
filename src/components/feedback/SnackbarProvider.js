@@ -81,7 +81,7 @@ const SnackbarProvider = ({ children }) => {
           <Alert
             key={item.key}
             severity={item.type}
-            variant="filled"
+            // variant="standard"
             onClose={() => dismiss(item.key)}
             sx={{
               pointerEvents: "auto", // ...but the alerts themselves stay clickable

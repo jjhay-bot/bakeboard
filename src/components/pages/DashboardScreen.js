@@ -16,11 +16,10 @@ import {
 import ScreenContainer from "../layout/ScreenContainer";
 import { PAYMENT_STATUS } from "../../services/orders/orderModel";
 import useDashboardOrders from "./useDashboardOrders";
+import DashboardScreenSkeleton from "./DashboardScreenSkeleton";
 
 const buildSummaryCards = (orders) => {
-  const paidCount = orders.filter(
-    (order) => order.paymentStatus === PAYMENT_STATUS.PAID,
-  ).length;
+  const paidCount = orders.filter((order) => order.paymentStatus === PAYMENT_STATUS.PAID).length;
   const downpaymentCount = orders.filter(
     (order) => order.paymentStatus === PAYMENT_STATUS.DOWNPAYMENT,
   ).length;
@@ -78,6 +77,7 @@ const buildProgress = (orders) => {
 const DashboardScreen = () => {
   const {
     orders,
+    isLoading,
     isImportDialogOpen,
     importText,
     handleOrderSaved,
@@ -109,6 +109,12 @@ const DashboardScreen = () => {
     handleOrderSaved();
   };
 
+  // Full-screen swap: skeleton stands in until the first load resolves. Placed
+  // after all hooks so the early return doesn't violate the rules of hooks.
+  if (isLoading) {
+    return <DashboardScreenSkeleton />;
+  }
+
   return (
     <ScreenContainer sx={{ bgcolor: "#fffaf6" }}>
       <Stack spacing={2} px={2} py={1.25}>
@@ -129,10 +135,7 @@ const DashboardScreen = () => {
           </Grid2>
         </Stack> */}
 
-        <Grid2
-          justifyContent={campaign.title ? "center" : "flex-end"}
-          container
-        >
+        <Grid2 justifyContent={campaign.title ? "center" : "flex-end"} container>
           {campaign.title ? (
             <Typography
               color="primary.main"
@@ -208,12 +211,7 @@ const DashboardScreen = () => {
         />
 
         <Stack spacing={1.25}>
-          <Grid2
-            container
-            alignItems="center"
-            justifyContent="space-between"
-            spacing={1}
-          >
+          <Grid2 container alignItems="center" justifyContent="space-between" spacing={1}>
             <Typography color="#6e3f2f" fontSize={22} fontWeight={700}>
               Orders Today
             </Typography>
@@ -238,11 +236,7 @@ const DashboardScreen = () => {
           </Grid2>
 
           {filteredOrders.map((order) => (
-            <DashboardOrderCard
-              key={order.id}
-              order={order}
-              tone={order.tone}
-            />
+            <DashboardOrderCard key={order.id} order={order} tone={order.tone} />
           ))}
         </Stack>
 

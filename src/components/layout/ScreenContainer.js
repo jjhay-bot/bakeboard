@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Fade, Stack } from "@mui/material";
 import Footer from "./Footer";
 import Header from "./Header";
 
@@ -8,6 +8,8 @@ const ScreenContainer = ({
   header,
   footer,
   content,
+  fade = true,
+  fadeTimeout = 400,
   ...props
 }) => {
   const supportsDvh = window.CSS && CSS.supports("(height: 100dvh)");
@@ -22,13 +24,17 @@ const ScreenContainer = ({
         {header ?? <Header />}
       </Stack>
 
-      <Stack
-        flex={1}
-        sx={{ height: "100%", overflowY: "auto", maxWidth: "100%" }}
-        // className="green"
-      >
-        {children ?? content}
-      </Stack>
+      {/* Content fades in on mount so screen/skeleton swaps don't pop.
+          Opt out per-screen with fade={false}. */}
+      <Fade in appear={fade} timeout={fade ? fadeTimeout : 0} >
+        <Stack
+          flex={1}
+          sx={{ height: "100%", overflowY: "auto", maxWidth: "100%" }}
+          // className="green"
+        >
+          {children ?? content}
+        </Stack>
+      </Fade>
 
       <Stack className="silver" flex={0}>
         {footer ?? <Footer />}
