@@ -1,36 +1,113 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Button, Grid2, Paper, Stack, Typography } from "@mui/material";
 import {
   defaultDashboardCampaign,
-  defaultDashboardOrdersToday,
   defaultDashboardProgress,
-  defaultDashboardSummary,
+  dashboardSummaryTones,
 } from "../../assets/data";
 import AddOrderDialog from "./AddOrder/AddOrderDialog";
 import {
+  DataToolbar,
+  ImportDialog,
   DashboardOrderCard,
   DashboardProgressCard,
   DashboardSummaryCard,
 } from "../molecules";
 import ScreenContainer from "../layout/ScreenContainer";
+import { PAYMENT_STATUS } from "../../services/orders/orderModel";
+import useDashboardOrders from "./useDashboardOrders";
+
+const buildSummaryCards = (orders) => {
+  const paidCount = orders.filter(
+    (order) => order.paymentStatus === PAYMENT_STATUS.PAID,
+  ).length;
+  const downpaymentCount = orders.filter(
+    (order) => order.paymentStatus === PAYMENT_STATUS.DOWNPAYMENT,
+  ).length;
+  const unpaidCount = orders.filter(
+    (order) => order.paymentStatus === PAYMENT_STATUS.UNPAID,
+  ).length;
+
+  return [
+    {
+      id: "total",
+      label: "Total",
+      value: orders.length,
+      filterValue: "all",
+      tone: dashboardSummaryTones.total,
+    },
+    {
+      id: "paid",
+      label: "Paid",
+      value: paidCount,
+      filterValue: PAYMENT_STATUS.PAID,
+      tone: dashboardSummaryTones.paid,
+    },
+    {
+      id: "downpayment",
+      label: "Downpayment",
+      value: downpaymentCount,
+      filterValue: PAYMENT_STATUS.DOWNPAYMENT,
+      tone: dashboardSummaryTones.downpayment,
+    },
+    {
+      id: "unpaid",
+      label: "Unpaid",
+      value: unpaidCount,
+      filterValue: PAYMENT_STATUS.UNPAID,
+      tone: dashboardSummaryTones.unpaid,
+    },
+  ];
+};
+
+const buildProgress = (orders) => {
+  const completedOrders = orders.filter(
+    (order) => order.paymentStatus === PAYMENT_STATUS.PAID,
+  ).length;
+  const totalOrders = orders.length;
+  const remainingOrders = Math.max(totalOrders - completedOrders, 0);
+
+  return {
+    ...defaultDashboardProgress,
+    totalOrders,
+    completedOrders,
+    helperText: `${completedOrders} paid or confirmed today, ${remainingOrders} remaining.`,
+  };
+};
 
 const DashboardScreen = () => {
+  const {
+    orders,
+    isImportDialogOpen,
+    importText,
+    handleOrderSaved,
+    handleExport,
+    handleImportFile,
+    handleImportTextSubmit,
+    handleImportTextChange,
+    handleReset,
+    openImportDialog,
+    closeImportDialog,
+  } = useDashboardOrders();
   const [campaign] = useState(defaultDashboardCampaign);
-  const [ordersToday] = useState(defaultDashboardOrdersToday);
-  const [dailyProgress] = useState(defaultDashboardProgress);
-  const [summaryCards] = useState(defaultDashboardSummary);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [isAddOrderOpen, setIsAddOrderOpen] = useState(false);
+
+  const summaryCards = useMemo(() => buildSummaryCards(orders), [orders]);
+  const dailyProgress = useMemo(() => buildProgress(orders), [orders]);
   const progressValue =
     dailyProgress.totalOrders > 0
       ? (dailyProgress.completedOrders / dailyProgress.totalOrders) * 100
       : 0;
   const filteredOrders =
     selectedFilter === "all"
-      ? ordersToday.items
-      : ordersToday.items.filter(
-          (order) => order.paymentStatus === selectedFilter,
-        );
+      ? orders
+      : orders.filter((order) => order.paymentStatus === selectedFilter);
+
+  const handleAddOrderSaved = () => {
+    setIsAddOrderOpen(false);
+    handleOrderSaved();
+  };
 
   return (
     <ScreenContainer sx={{ bgcolor: "#fffaf6" }}>
@@ -138,7 +215,7 @@ const DashboardScreen = () => {
             spacing={1}
           >
             <Typography color="#6e3f2f" fontSize={22} fontWeight={700}>
-              {ordersToday.title}
+              Orders Today
             </Typography>
 
             <Button
@@ -168,11 +245,33 @@ const DashboardScreen = () => {
             />
           ))}
         </Stack>
+
+        <DataToolbar
+          title="Order actions"
+          importLabel="Import orders"
+          downloadLabel="Export orders as JSON"
+          resetLabel="Delete all saved orders"
+          onImport={openImportDialog}
+          onDownload={handleExport}
+          onReset={handleReset}
+        />
       </Stack>
 
       <AddOrderDialog
         open={isAddOrderOpen}
         onClose={() => setIsAddOrderOpen(false)}
+        onSaveSuccess={handleAddOrderSaved}
+      />
+      <ImportDialog
+        open={isImportDialogOpen}
+        title="Import orders"
+        description="Upload an exported orders file or paste the JSON to merge it in."
+        fieldLabel="Orders JSON"
+        importText={importText}
+        onChangeText={handleImportTextChange}
+        onClose={closeImportDialog}
+        onImportFile={handleImportFile}
+        onSubmit={handleImportTextSubmit}
       />
     </ScreenContainer>
   );

@@ -1,6 +1,5 @@
 import {
   Button,
-  Chip,
   Dialog,
   DialogContent,
   DialogTitle,
@@ -8,6 +7,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import SelectablePill from "../../atoms/SelectablePill";
 
 const MoodboardIdeaDialog = ({
   open,
@@ -58,19 +58,11 @@ const MoodboardIdeaDialog = ({
             </Typography>
             <Stack direction="row" flexWrap="wrap" gap={1}>
               {tagOptions.map((option) => (
-                <Chip
+                <SelectablePill
                   key={option.value}
                   label={option.label}
-                  clickable
+                  selected={formValues.tag === option.value}
                   onClick={() => onSelectField("tag", option.value)}
-                  sx={{
-                    bgcolor:
-                      formValues.tag === option.value ? "#ffe5dc" : "#fff6f0",
-                    border: "1px solid #f2d7ca",
-                    color:
-                      formValues.tag === option.value ? "#c85027" : "#8a6a5c",
-                    fontWeight: 700,
-                  }}
                 />
               ))}
             </Stack>
@@ -81,23 +73,11 @@ const MoodboardIdeaDialog = ({
             </Typography>
             <Stack direction="row" flexWrap="wrap" gap={1}>
               {statusOptions.map((option) => (
-                <Chip
+                <SelectablePill
                   key={option.value}
                   label={option.label}
-                  clickable
+                  selected={formValues.status === option.value}
                   onClick={() => onSelectField("status", option.value)}
-                  sx={{
-                    bgcolor:
-                      formValues.status === option.value
-                        ? "#ffe5dc"
-                        : "#fff6f0",
-                    border: "1px solid #f2d7ca",
-                    color:
-                      formValues.status === option.value
-                        ? "#c85027"
-                        : "#8a6a5c",
-                    fontWeight: 700,
-                  }}
                 />
               ))}
             </Stack>

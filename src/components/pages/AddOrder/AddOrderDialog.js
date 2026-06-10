@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import AddOrderForm from "./AddOrderForm";
 
-const AddOrderDialog = ({ open, onClose }) => {
+const AddOrderDialog = ({ open, onClose, onSaveSuccess }) => {
   return (
     <Dialog
       open={open}
@@ -38,7 +38,7 @@ const AddOrderDialog = ({ open, onClose }) => {
       </DialogTitle>
 
       <DialogContent sx={{ pt: "6px !important", px: 2.25, pb: 2.25 }}>
-        <AddOrderForm submitLabel="Save Draft" />
+        <AddOrderForm submitLabel="Save Draft" onSaveSuccess={onSaveSuccess} />
       </DialogContent>
     </Dialog>
   );

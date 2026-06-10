@@ -26,6 +26,10 @@ const useMoodboardNotes = () => {
 
     const loadMoodboardNotes = async () => {
       try {
+        // API-ready note:
+        // If a backend moodboard endpoint is introduced later, move this read
+        // behind a dedicated service module and replace the localforage call
+        // there, e.g. listMoodboardNotes -> GET /moodboard-notes.
         const storedNotes = await getForage(moodboardStorageKey);
 
         if (!isMounted) {
@@ -59,6 +63,9 @@ const useMoodboardNotes = () => {
 
     const persistMoodboardNotes = async () => {
       try {
+        // API-ready note:
+        // Replace this local persistence call through a service boundary when
+        // backend CRUD is ready, e.g. saveMoodboardNotes -> PUT/POST endpoint.
         await setForage(moodboardStorageKey, notes);
       } catch (error) {
         console.error("Failed to save moodboard notes", error);

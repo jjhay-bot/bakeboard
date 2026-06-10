@@ -6,6 +6,7 @@ import {
   nextSunday,
   parseISO,
 } from "date-fns";
+import { PRODUCTS } from "../../../services/orders/orderModel";
 
 export const emptyAddOrderForm = {
   customerName: "",
@@ -13,17 +14,14 @@ export const emptyAddOrderForm = {
   themeNotes: "",
   product: "bento-cake",
   flavor: "chocolate",
-  paymentStatus: "downpayment",
+  paymentAmount: "",
   pickupSlot: "morning",
 };
 
-export const addOrderProductOptions = [
-  { value: "bento-cake", label: "Bento Cake" },
-  { value: "mini-cake", label: "Mini Cake" },
-  { value: "cupcake-box", label: "Cupcake Box" },
-  { value: "cookie-box", label: "Cookie Box" },
-  { value: "number-cake", label: "Number Cake" },
-];
+export const addOrderProductOptions = PRODUCTS.map(({ value, label }) => ({
+  value,
+  label,
+}));
 
 export const addOrderFlavorOptions = [
   { value: "chocolate", label: "Chocolate" },
@@ -33,12 +31,6 @@ export const addOrderFlavorOptions = [
   { value: "strawberry", label: "Strawberry" },
 ];
 
-export const addOrderPaymentOptions = [
-  { value: "paid", label: "Paid" },
-  { value: "downpayment", label: "Downpayment" },
-  { value: "unpaid", label: "Unpaid" },
-];
-
 export const addOrderPickupSlotOptions = [
   { value: "morning", label: "Morning" },
   { value: "afternoon", label: "Afternoon" },
@@ -46,19 +38,11 @@ export const addOrderPickupSlotOptions = [
 ];
 
 export const addOrderValueLabelMap = {
-  "bento-cake": "Bento Cake",
-  "mini-cake": "Mini Cake",
-  "cupcake-box": "Cupcake Box",
-  "cookie-box": "Cookie Box",
-  "number-cake": "Number Cake",
   chocolate: "Chocolate",
   vanilla: "Vanilla",
   "red-velvet": "Red Velvet",
   ube: "Ube",
   strawberry: "Strawberry",
-  paid: "Paid",
-  downpayment: "Downpayment",
-  unpaid: "Unpaid",
   morning: "Morning",
   afternoon: "Afternoon",
   evening: "Evening",

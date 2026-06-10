@@ -16,6 +16,15 @@ const boardPanelStyles = {
 const primaryColor = "#ff7f8f";
 const secondaryColor = "#6e3f2f";
 
+// Shared palette for selectable pills (chips, quick-date buttons, tags).
+const boardPill = {
+  bg: "#fff6f0",
+  bgSelected: "#ffe5dc",
+  border: "#f2d7ca",
+  text: "#8a6a5c",
+  textSelected: "#c85027",
+};
+
 const boardNoteStyles = {
   padding: "16px",
   borderRadius: "9px",
@@ -35,6 +44,7 @@ const theme = createTheme({
     secondary: {
       main: secondaryColor,
     },
+    boardPill,
     background: {
       default: boardCanvas,
       paper: boardPaper,
