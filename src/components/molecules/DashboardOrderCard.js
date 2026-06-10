@@ -50,7 +50,7 @@ const DashboardOrderCard = ({ order, tone }) => {
                 color={nameColor}
                 fontSize={18}
                 fontWeight={700}
-                sx={{ letterSpacing: 0 }}
+                sx={{ letterSpacing: "-0.025rem" }}
               >
                 {order.customerName}
               </Typography>

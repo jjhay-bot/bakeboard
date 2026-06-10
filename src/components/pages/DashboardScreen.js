@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Button, Grid2, Paper, Stack, Typography } from "@mui/material";
+import { Button, Grid2, keyframes, Paper, Stack, Typography } from "@mui/material";
 import {
   defaultDashboardCampaign,
   defaultDashboardProgress,
@@ -17,6 +17,13 @@ import ScreenContainer from "../layout/ScreenContainer";
 import { PAYMENT_STATUS } from "../../services/orders/orderModel";
 import useDashboardOrders from "./useDashboardOrders";
 import DashboardScreenSkeleton from "./DashboardScreenSkeleton";
+
+// Replayed on each filter change (via the keyed wrapper) so the order list
+// fades in instead of snapping when the active summary card changes.
+const orderListFadeIn = keyframes`
+  from { opacity: 0; transform: translateX(6px); }
+  to { opacity: 1; transform: translateX(0); }
+`;
 
 const buildSummaryCards = (orders) => {
   const paidCount = orders.filter((order) => order.paymentStatus === PAYMENT_STATUS.PAID).length;
@@ -235,9 +242,15 @@ const DashboardScreen = () => {
             </Button>
           </Grid2>
 
-          {filteredOrders.map((order) => (
-            <DashboardOrderCard key={order.id} order={order} tone={order.tone} />
-          ))}
+          <Stack
+            key={selectedFilter}
+            spacing={1.25}
+            sx={{ animation: `${orderListFadeIn} 1000ms ease-out` }}
+          >
+            {filteredOrders.map((order) => (
+              <DashboardOrderCard key={order.id} order={order} tone={order.tone} />
+            ))}
+          </Stack>
         </Stack>
 
         <DataToolbar
