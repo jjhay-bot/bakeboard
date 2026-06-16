@@ -22,4 +22,8 @@
   <text x="420" y="270" font-family="Poppins, Helvetica, Arial, sans-serif" font-size="92" font-weight="600" fill="#6e3f2f">bakeBoard</text>
   <text x="424" y="340" font-family="Poppins, Helvetica, Arial, sans-serif" font-size="38" font-weight="500" fill="#9a7a6a">Bakery Order &amp; Production Management</text>
   <text x="424" y="400" font-family="Poppins, Helvetica, Arial, sans-serif" font-size="30" font-weight="400" fill="#9a7a6a">Orders &#183; Schedules &#183; Payments &#183; Moodboards</text>
+
+  <!-- Call to action -->
+  <rect x="424" y="448" width="402" height="68" rx="34" fill="#ff7f8f"/>
+  <text x="625" y="492" text-anchor="middle" font-family="Poppins, Helvetica, Arial, sans-serif" font-size="30" font-weight="600" fill="#ffffff">Start managing orders &#8594;</text>
 </svg>
