@@ -1,8 +1,9 @@
-import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
+// import CalendarMonthRoundedIcon from "@mui/icons-material/CalendarMonthRounded";
 import LightbulbRoundedIcon from "@mui/icons-material/LightbulbRounded";
 // import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import PaymentsRoundedIcon from "@mui/icons-material/PaymentsRounded";
 import ReceiptLongRoundedIcon from "@mui/icons-material/ReceiptLongRounded";
+import SavingsRoundedIcon from "@mui/icons-material/SavingsRounded";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
 import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -21,17 +22,23 @@ const navItems = [
     matchPaths: ["/orders", "/orders/new", "/", "/home", "/dashboard"],
     icon: <ReceiptLongRoundedIcon />,
   },
-  {
-    label: "Calendar",
-    value: "/calendar",
-    matchPaths: ["/calendar"],
-    icon: <CalendarMonthRoundedIcon />,
-  },
+  // {
+  //   label: "Calendar",
+  //   value: "/calendar",
+  //   matchPaths: ["/calendar"],
+  //   icon: <CalendarMonthRoundedIcon />,
+  // },
   {
     label: "Payments",
     value: "/payments",
     matchPaths: ["/payments"],
     icon: <PaymentsRoundedIcon />,
+  },
+  {
+    label: "Expenses",
+    value: "/expenses",
+    matchPaths: ["/expenses"],
+    icon: <SavingsRoundedIcon />,
   },
   {
     label: "Moodboard",
