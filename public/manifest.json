@@ -1,25 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "bakeBoard",
+  "name": "bakeBoard — Bakery Order & Production Management",
+  "description": "Manage custom bakery orders, production schedules, payments, and moodboards in one simple dashboard.",
+  "lang": "en-US",
+  "categories": ["business", "productivity", "food"],
   "icons": [
     {
-      "src": "logo.svg",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo.svg",
-      "type": "image/png",
-      "sizes": "192x192"
-    },
-    {
-      "src": "logo.svg",
-      "type": "image/png",
-      "sizes": "512x512"
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#ed5a29",
+  "background_color": "#fffaf6"
 }
