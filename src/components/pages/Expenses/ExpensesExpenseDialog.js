@@ -157,7 +157,14 @@ const ExpensesExpenseDialog = ({
                   component="img"
                   src={imagePreviewUrl}
                   alt="Receipt preview"
-                  sx={{ display: "block", width: "100%", maxHeight: 240, objectFit: "cover" }}
+                  sx={{
+                    display: "block",
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: 360,
+                    objectFit: "contain",
+                    bgcolor: "#fff6f0",
+                  }}
                 />
                 <IconButton
                   aria-label="Remove receipt"
