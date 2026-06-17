@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getForage, setForage } from "../../../utils/forage";
 import {
   buildEmptyExpenseForm,
@@ -11,6 +11,11 @@ import {
   shiftMonth,
   sortExpenses,
 } from "./expensesData";
+import {
+  getExpenseImage,
+  removeExpenseImage,
+  saveExpenseImage,
+} from "./expensesImageStore";
 
 const useExpenses = () => {
   const [expenses, setExpenses] = useState(initialExpenses);
@@ -23,6 +28,37 @@ const useExpenses = () => {
   const [importText, setImportText] = useState("");
   const [isSummaryOpen, setIsSummaryOpen] = useState(false);
   const [summaryMonth, setSummaryMonth] = useState(getCurrentMonthInput);
+  // Receipt image draft for the open form: the blob to persist on submit plus
+  // an object URL for preview. The URL is tracked in a ref so we can revoke the
+  // previous one whenever it changes (and on unmount) to avoid memory leaks.
+  const [imageBlob, setImageBlob] = useState(null);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState(null);
+  const previewUrlRef = useRef(null);
+
+  const showPreview = (blob) => {
+    if (previewUrlRef.current) {
+      URL.revokeObjectURL(previewUrlRef.current);
+    }
+
+    const nextUrl = blob ? URL.createObjectURL(blob) : null;
+    previewUrlRef.current = nextUrl;
+    setImagePreviewUrl(nextUrl);
+  };
+
+  const clearImageDraft = () => {
+    setImageBlob(null);
+    showPreview(null);
+  };
+
+  // Revoke any outstanding preview URL when the screen unmounts.
+  useEffect(
+    () => () => {
+      if (previewUrlRef.current) {
+        URL.revokeObjectURL(previewUrlRef.current);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     let isMounted = true;
@@ -104,10 +140,18 @@ const useExpenses = () => {
     }
 
     setIsPersistenceEnabled(true);
-    setExpenses(normalizeExpenses(importedExpenses));
+    // Images are stored as blobs and never travel inside the JSON, so any
+    // imported `hasImage` flag would dangle — drop it on import.
+    setExpenses(
+      normalizeExpenses(importedExpenses).map((expense) => ({
+        ...expense,
+        hasImage: false,
+      })),
+    );
     setIsDialogOpen(false);
     setEditingExpenseId(null);
     setFormValues(buildEmptyExpenseForm());
+    clearImageDraft();
     setIsImportDialogOpen(false);
     setImportText("");
   };
@@ -158,10 +202,15 @@ const useExpenses = () => {
     }
 
     setIsPersistenceEnabled(true);
+    // Clean up any stored receipt blobs so they don't orphan in localforage.
+    expenses
+      .filter((expense) => expense.hasImage)
+      .forEach((expense) => removeExpenseImage(expense.id));
     setExpenses([]);
     setIsDialogOpen(false);
     setEditingExpenseId(null);
     setFormValues(buildEmptyExpenseForm());
+    clearImageDraft();
   };
 
   const handleOpenSummary = () => {
@@ -178,16 +227,46 @@ const useExpenses = () => {
     setSummaryMonth((current) => shiftMonth(current, offset));
   };
 
+  const handlePickImage = (file) => {
+    if (!file) {
+      return;
+    }
+
+    if (!file.type || !file.type.startsWith("image/")) {
+      window.alert("Please choose an image file.");
+      return;
+    }
+
+    setImageBlob(file);
+    showPreview(file);
+  };
+
+  const handleRemoveImage = () => {
+    clearImageDraft();
+  };
+
   const handleOpenDialog = () => {
     setEditingExpenseId(null);
     setFormValues(buildEmptyExpenseForm());
+    clearImageDraft();
     setIsDialogOpen(true);
   };
 
-  const handleEditExpense = (expense) => {
+  const handleEditExpense = async (expense) => {
     setEditingExpenseId(expense.id);
     setFormValues(buildExpenseFormValues(expense));
+    clearImageDraft();
     setIsDialogOpen(true);
+
+    // Lazy-load the stored receipt so editing keeps it unless the user removes it.
+    if (expense.hasImage) {
+      const storedBlob = await getExpenseImage(expense.id);
+
+      if (storedBlob) {
+        setImageBlob(storedBlob);
+        showPreview(storedBlob);
+      }
+    }
   };
 
   const handleDeleteExpense = (targetExpense) => {
@@ -201,12 +280,17 @@ const useExpenses = () => {
     setExpenses((current) =>
       current.filter((expense) => expense.id !== targetExpense.id),
     );
+
+    if (targetExpense.hasImage) {
+      removeExpenseImage(targetExpense.id);
+    }
   };
 
   const handleCloseDialog = () => {
     setIsDialogOpen(false);
     setEditingExpenseId(null);
     setFormValues(buildEmptyExpenseForm());
+    clearImageDraft();
   };
 
   const handleChange = (field) => (event) => {
@@ -237,6 +321,17 @@ const useExpenses = () => {
 
     setIsPersistenceEnabled(true);
 
+    const targetId = editingExpenseId || `expense-${Date.now()}`;
+    const nextHasImage = Boolean(imageBlob);
+
+    // Persist the receipt blob (or drop it) under its own key. Fire-and-forget:
+    // the blob lives outside the expenses array, so it isn't part of this save.
+    if (imageBlob) {
+      saveExpenseImage(targetId, imageBlob);
+    } else {
+      removeExpenseImage(targetId);
+    }
+
     if (editingExpenseId) {
       setExpenses((current) =>
         sortExpenses(
@@ -249,6 +344,7 @@ const useExpenses = () => {
                   category: formValues.category,
                   paymentChannel: formValues.paymentChannel,
                   note: trimmedNote,
+                  hasImage: nextHasImage,
                 }
               : expense,
           ),
@@ -259,12 +355,13 @@ const useExpenses = () => {
     }
 
     const createdExpense = {
-      id: `expense-${Date.now()}`,
+      id: targetId,
       date: nextDate,
       amount: numericAmount,
       category: formValues.category,
       paymentChannel: formValues.paymentChannel,
       note: trimmedNote,
+      hasImage: nextHasImage,
     };
 
     setExpenses((current) => sortExpenses([createdExpense, ...current]));
@@ -280,9 +377,12 @@ const useExpenses = () => {
     formValues,
     editingExpenseId,
     importText,
+    imagePreviewUrl,
     handleOpenSummary,
     handleCloseSummary,
     handleSummaryMonthShift,
+    handlePickImage,
+    handleRemoveImage,
     handleOpenDialog,
     handleDownloadExpenses,
     handleEditExpense,

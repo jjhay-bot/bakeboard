@@ -29,9 +29,12 @@ const ExpensesScreen = () => {
     formValues,
     editingExpenseId,
     importText,
+    imagePreviewUrl,
     handleOpenSummary,
     handleCloseSummary,
     handleSummaryMonthShift,
+    handlePickImage,
+    handleRemoveImage,
     handleOpenDialog,
     handleDownloadExpenses,
     handleEditExpense,
@@ -255,6 +258,9 @@ const ExpensesScreen = () => {
         onSubmit={handleSubmit}
         categoryOptions={expenseCategoryOptions}
         paymentChannelOptions={expensePaymentChannelOptions}
+        imagePreviewUrl={imagePreviewUrl}
+        onPickImage={handlePickImage}
+        onRemoveImage={handleRemoveImage}
       />
       <ExpensesImportDialog
         open={isImportDialogOpen}
