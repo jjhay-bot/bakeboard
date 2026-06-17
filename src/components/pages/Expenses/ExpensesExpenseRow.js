@@ -7,9 +7,11 @@ import {
   getCategoryLabel,
   getPaymentChannelLabel,
 } from "./expensesData";
+import useExpenseImage from "./useExpenseImage";
 
 const ExpensesExpenseRow = ({ expense, onEdit, onDelete }) => {
   const [menuAnchor, setMenuAnchor] = useState(null);
+  const imageUrl = useExpenseImage(expense);
 
   const handleOpenMenu = (event) => {
     setMenuAnchor(event.currentTarget);
@@ -40,6 +42,22 @@ const ExpensesExpenseRow = ({ expense, onEdit, onDelete }) => {
         spacing={1.5}
         alignItems="flex-start"
       >
+        {imageUrl ? (
+          <Box
+            component="img"
+            src={imageUrl}
+            alt={`${getCategoryLabel(expense.category)} receipt`}
+            sx={{
+              width: 48,
+              height: 48,
+              flexShrink: 0,
+              borderRadius: "10px",
+              objectFit: "cover",
+              border: "1px solid #f2d7ca",
+            }}
+          />
+        ) : null}
+
         <Stack
           spacing={0.75}
           flexGrow={1}

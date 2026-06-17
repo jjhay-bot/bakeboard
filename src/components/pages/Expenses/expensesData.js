@@ -207,6 +207,7 @@ export const normalizeExpenses = (expenses) => {
       paymentChannel:
         typeof expense.paymentChannel === "string" ? expense.paymentChannel : defaultPaymentChannel,
       note: typeof expense.note === "string" ? expense.note : "",
+      hasImage: expense.hasImage === true,
     }));
 
   return sortExpenses(cleaned);
