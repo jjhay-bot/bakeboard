@@ -14,6 +14,9 @@ import ExpensesSummary from "./ExpensesSummary";
 import {
   expenseCategoryOptions,
   expensePaymentChannelOptions,
+  filterExpensesByMonth,
+  formatMonthLabel,
+  getCurrentMonthInput,
   getExpensesTotal,
 } from "./expensesData";
 import useExpenses from "./useExpenses";
@@ -61,6 +64,11 @@ const ExpensesScreen = () => {
     await handleImportFile(file);
     event.target.value = "";
   };
+
+  // The main screen shows the current month only; other months stay reachable
+  // through the monthly summary dialog.
+  const currentMonth = getCurrentMonthInput();
+  const monthExpenses = filterExpensesByMonth(expenses, currentMonth);
 
   return (
     <ScreenContainer sx={{ bgcolor: "#fffaf6" }}>
@@ -130,13 +138,21 @@ const ExpensesScreen = () => {
         </Stack>
 
         <ExpensesSummary
-          total={getExpensesTotal(expenses)}
-          count={expenses.length}
+          total={getExpensesTotal(monthExpenses)}
+          count={monthExpenses.length}
         />
 
-        {expenses.length > 0 ? (
+        <Typography
+          color="#9a7a6a"
+          fontSize={13}
+          fontWeight={700}
+        >
+          {formatMonthLabel(currentMonth)}
+        </Typography>
+
+        {monthExpenses.length > 0 ? (
           <Stack spacing={1.5}>
-            {expenses.map((expense) => (
+            {monthExpenses.map((expense) => (
               <ExpensesExpenseRow
                 key={expense.id}
                 expense={expense}
@@ -157,13 +173,13 @@ const ExpensesScreen = () => {
                 fontSize={16}
                 fontWeight={700}
               >
-                No expenses yet
+                No expenses this month
               </Typography>
               <Typography
                 color="#9a7a6a"
                 fontSize={14}
               >
-                Tap the plus button to log your first expense.
+                Tap the plus button to log an expense for {formatMonthLabel(currentMonth)}.
               </Typography>
             </Stack>
           </Paper>

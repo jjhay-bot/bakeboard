@@ -24,7 +24,8 @@ const ExpensesImportDialog = ({
             Import expenses
           </Typography>
           <Typography color="#8a6a5c" fontSize={14}>
-            Paste the exported expenses JSON here to replace the current list.
+            Paste the exported expenses JSON here to merge it into your current
+            list. Existing entries are kept; only new ones are added.
           </Typography>
         </Stack>
       </DialogTitle>

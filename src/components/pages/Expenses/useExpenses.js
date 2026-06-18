@@ -132,22 +132,31 @@ const useExpenses = () => {
     URL.revokeObjectURL(objectUrl);
   };
 
-  const replaceExpensesFromImport = (payload) => {
+  const mergeExpensesFromImport = (payload) => {
     const importedExpenses = extractExpenseImportItems(payload);
 
     if (importedExpenses === null) {
       throw new Error("Invalid expenses JSON format");
     }
 
-    setIsPersistenceEnabled(true);
     // Images are stored as blobs and never travel inside the JSON, so any
     // imported `hasImage` flag would dangle — drop it on import.
-    setExpenses(
-      normalizeExpenses(importedExpenses).map((expense) => ({
-        ...expense,
-        hasImage: false,
-      })),
-    );
+    const incoming = normalizeExpenses(importedExpenses).map((expense) => ({
+      ...expense,
+      hasImage: false,
+    }));
+
+    setIsPersistenceEnabled(true);
+    // Merge, don't replace: append only entries whose id isn't already present
+    // so existing records (and their receipt images) are never overwritten.
+    setExpenses((current) => {
+      const existingIds = new Set(current.map((expense) => expense.id));
+      const additions = incoming.filter(
+        (expense) => !existingIds.has(expense.id),
+      );
+
+      return sortExpenses([...current, ...additions]);
+    });
     setIsDialogOpen(false);
     setEditingExpenseId(null);
     setFormValues(buildEmptyExpenseForm());
@@ -173,7 +182,7 @@ const useExpenses = () => {
     event.preventDefault();
 
     try {
-      replaceExpensesFromImport(JSON.parse(importText));
+      mergeExpensesFromImport(JSON.parse(importText));
     } catch (error) {
       window.alert(
         "Could not import expenses JSON. Check the format and try again.",
@@ -188,7 +197,7 @@ const useExpenses = () => {
 
     try {
       const fileText = await file.text();
-      replaceExpensesFromImport(JSON.parse(fileText));
+      mergeExpensesFromImport(JSON.parse(fileText));
     } catch (error) {
       window.alert("Could not import expenses JSON file.");
     }
